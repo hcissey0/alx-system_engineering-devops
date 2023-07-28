@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# this is the clock
+
+h=0
+while [ $h -lt 12 ]
+do
+	echo "Hour: $h"
+	((h++))
+	for m in {1..59}
+	do
+		echo "$m"
+	done
+done
+echo "Hour: $h"
+for m in {1..59}
+do
+	echo "$m"
+done
