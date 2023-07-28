@@ -12,7 +12,9 @@ do
 	done
 done
 echo "Hour: $h"
-for m in {1..59}
+m=0
+while [ $m -lt 60 ]
 do
 	echo "$m"
+	((m++))
 done
