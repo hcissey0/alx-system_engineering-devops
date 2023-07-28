@@ -10,6 +10,7 @@ do
 	while [ $m -lt 60 ]
 	do
 		echo "$m"
+		((m++))
 	done
 done
 echo "Hour: $h"
