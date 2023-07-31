@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# this is don't stop me now
+
+pkill -f 4-to_infinity_and_beyond
