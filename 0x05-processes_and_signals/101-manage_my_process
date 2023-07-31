@@ -4,14 +4,14 @@
 file=/var/run/my_process.pid
 case "$1" in
 	start)
-		./manage_process &
+		./manage_my_process &
 		echo $! > $file
 		echo "manage_my_process started"
 		;;
 	stop)
 		kill $(cat $file)
 		rm -f $file
-		echo "manage_process stopped"
+		echo "manage_my_process stopped"
 		;;
 	restart)
 		kill $(cat $file)
