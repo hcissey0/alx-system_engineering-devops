@@ -30,6 +30,7 @@ int main(void)
 			printf("Zombie process created, PID: %d\n", pid);
 		else
 			exit(0);
+		i++;
 	}
 
 	infinite_loop();
