@@ -9,7 +9,7 @@
  */
 void infinite_loop(void)
 {
-	for(;;)
+	for (;;)
 		sleep(1);
 }
 
