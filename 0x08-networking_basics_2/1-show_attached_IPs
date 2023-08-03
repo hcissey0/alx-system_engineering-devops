@@ -1,12 +1,4 @@
 #!/usr/bin/env bash
 # this script shows all ips in a device
 
-interfaces=$(ip -o link show | awk -F": " '{print $2}')
-for i in $interfaces;
-do
-	addresses=$(ip -o -4 addr show $i | awk '{print $4}')
-	for addr in $addresses;
-	do
-		echo "$addr" | cut -d'/' -f1
-	done
-done
+ifconfig | grep "inet " | awk '{print $2}'
