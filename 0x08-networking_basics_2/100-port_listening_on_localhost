@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# this script starts a port listener
+
+nc -l -p 98
