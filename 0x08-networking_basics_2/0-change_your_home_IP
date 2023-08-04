@@ -2,6 +2,6 @@
 # this script is used to change the localhost to 127.0.0.2
 # and set 8.8.8.8 as facebook.com
 
-sudo cp /etc/hosts ~/hosts.new
-sed -i 's/^127.*$/127.0.0.2\tlocalhost\n8.8.8.8\tfacebook.com/g' ~/hosts.new
-sudo cp -f ~/hosts.new /etc/hosts
+cp /etc/hosts ~/hosts.new
+sed -i 's/127.*$/127.0.0.2 localhost\n8.8.8.8 facebook.com/' ~/hosts.new
+cp -f ~/hosts.new /etc/hosts
