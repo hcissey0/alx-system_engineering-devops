@@ -1,3 +1,5 @@
+# This puppet manifest is used to create a file in /tmp
+
 file { '/tmp/school':
   ensure  => file,
   mode    => '0774',
