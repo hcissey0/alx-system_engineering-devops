@@ -12,5 +12,5 @@ ip=$2
 uname=$3
 key=$4
 
-scp -o StrictHostKeyChecking=no -i "$key" "$file" "$user@$ip:~/"
+scp -o StrictHostKeyChecking=no -i "$key" "$file" "$uname@$ip:~/"
 exit 0
