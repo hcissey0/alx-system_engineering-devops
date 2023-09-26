@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# This bash script is used to setup redirections
+sudo apt-get update -y
+sudo apt-get install nginx -y
+
+sudo service nginx start
+echo "Hello World!" | sudo tee /var/www/html/index.html
+echo "server {
+    listen 80;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    index index.html index.htm;
+    location /redirect_me {
+        return 301 https://youtube.com/watch?v=QH@-TGUlwu4;
+    }
+}" | sudo tee /etc/nginx/sites-available/default
+sudo service nginx restart
