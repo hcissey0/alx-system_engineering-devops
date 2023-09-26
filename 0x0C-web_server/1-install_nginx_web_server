@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# This bash script is used to install nginx on the server and set it up and running
+
+apt-get update -y
+apt-get install nginx -y
+
+service nginx start
+ufw allow 'Nginx HTTP'
+echo "Hello World!" > /var/www/html/index.html
+service nginx restart
