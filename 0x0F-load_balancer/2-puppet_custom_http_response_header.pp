@@ -1,47 +1,47 @@
-# Ensure the package 'nginx' is installed
-package { 'nginx':
-    ensure => installed,
-    before => [File['/var/www/html/index.html', '/var/www/html/custom_404.html'], Exec['nginx_config']],
-}
+# Configure a custom 404 page
+class custom_404 {
 
-# Create the index.html file
-file { '/var/www/html/index.html':
-    ensure  => file,
-    content => 'Hello World!',
-}
+  # Install the Nginx web server
+  package { 'nginx':
+    ensure => present,
+  }
 
-# Create the custom_404.html file
-file { '/var/www/html/custom_404.html':
-    ensure  => file,
+  # Create the custom 404 page
+  file { '/var/www/html/custom_404.html':
+    ensure => present,
     content => 'Ceci n\'est pas une page',
-}
+  }
 
-# Create the default nginx site configuration
-exec { 'nginx_config':
-    command => "/bin/echo -e \"server {
-        listen 80;
-        listen [::]:80 default_server;
-        root /var/www/html;
-        index index.html index.htm;
-        add_header X-Served-By $::hostname;
-        location /redirect_me {
-            return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-        }
-        error_page 404 /custom_404.html;
-        location /404 {
-            root /var/www/html;
-            internal;
-        }
-    }\" > /etc/nginx/sites-available/default",
-    path    => ['/bin', '/usr/bin'],
-    require => File['/var/www/html/index.html', '/var/www/html/custom_404.html'],
-}
+  # Update the Nginx configuration
+  file { '/etc/nginx/sites-available/default':
+    ensure => present,
+    content => "
+server {
+  listen 80;
+  listen [::]:80 default_server;
+  root /var/www/html;
+  index index.html index.htm;
+  add_header X-Served-By $(hostname);
 
-# Ensure the service 'nginx' is running and enabled at boot
-service { 'nginx':
-    ensure     => running,
-    enable     => true,
-    hasrestart => true,
-    require    => Exec['nginx_config'],
+  location /redirect_me {
+    return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+  }
+
+  error_page 404 /custom_404.html;
+
+  location /404 {
+    root /var/www/html;
+    internal;
+  }
+}
+"
+  }
+
+  # Restart the Nginx web server
+  service { 'nginx':
+    ensure => running,
+    enabled => true,
+  }
+
 }
 

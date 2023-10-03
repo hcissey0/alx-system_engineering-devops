@@ -1,7 +1,0 @@
-ENABLED=1 tee /etc/default/haproxy
-ENABLED=1 tee /etc/default/haproxy
-ENABLED=1 tee /etc/default/haproxy
-ENABLED=1 tee /etc/default/haproxy
-ENABLED=1 tee /etc/default/haproxy
-ENABLED=1 tee /etc/default/haproxy
-ENABLED=1 tee /etc/default/haproxy
