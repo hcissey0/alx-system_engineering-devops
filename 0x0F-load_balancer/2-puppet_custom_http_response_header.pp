@@ -1,6 +1,11 @@
 # Configure a custom 404 page
 class custom_404 {
 
+  exec { 'update':
+    command => 'sudo apt-get update -y',
+    before  => Package['nginx'],
+  }
+
   # Install the Nginx web server
   package { 'nginx':
     ensure => present,
