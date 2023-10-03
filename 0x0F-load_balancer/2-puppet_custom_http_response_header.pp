@@ -15,7 +15,7 @@ exec { 'nginx':
 exec { 'header_config':
     provider   => shell,
     enviroment => ["NAME=${hostname}"],
-    command    => 'sudo sed -i "s/include \/etc\/nginx\/sites-enabled\/\*;/include \/etc\/enginx\/sites-enaled\/\*;\n\tadd_header X-Served-By \"$NAME\";/" /etc/nginx/nginx.conf,
+    command    => 'sudo sed -i "s/include \/etc\/nginx\/sites-enabled\/\*;/include \/etc\/enginx\/sites-enaled\/\*;\n\tadd_header X-Served-By \"$NAME\";/" /etc/nginx/nginx.conf',
     before     => Exec['nginx_restart'],
 }
 
