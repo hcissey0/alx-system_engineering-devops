@@ -1,25 +1,47 @@
-# This script is used to setup servers with puppet manifest
-
-exec { 'update':
-    provider => shell,
-    command  => 'sudo apt-get -y update',
-    before   => Exec['nginx'],
+# Ensure the package 'nginx' is installed
+package { 'nginx':
+    ensure => installed,
+    before => [File['/var/www/html/index.html', '/var/www/html/custom_404.html'], Exec['nginx_config']],
 }
 
-exec { 'nginx':
-    provider => shell,
-    command  => 'sudo apt-get install nginx -y',
-    before   => Exec['header_config'],
+# Create the index.html file
+file { '/var/www/html/index.html':
+    ensure  => file,
+    content => 'Hello World!',
 }
 
-exec { 'header_config':
-    provider   => shell,
-    environment => ["NAME=${hostname}"],
-    command    => 'sudo sed -i "s/include \/etc\/nginx\/sites-enabled\/\*;/include \/etc\/nginx\/sites-enaled\/\*;\n\tadd_header X-Served-By \"$NAME\";/" /etc/nginx/nginx.conf',
-    before     => Exec['nginx_restart'],
+# Create the custom_404.html file
+file { '/var/www/html/custom_404.html':
+    ensure  => file,
+    content => 'Ceci n\'est pas une page',
 }
 
-exec { 'nginx_restart':
-    provider => shell,
-    command  => 'sudo service nginx restart',
+# Create the default nginx site configuration
+exec { 'nginx_config':
+    command => "/bin/echo -e \"server {
+        listen 80;
+        listen [::]:80 default_server;
+        root /var/www/html;
+        index index.html index.htm;
+        add_header X-Served-By $::hostname;
+        location /redirect_me {
+            return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+        }
+        error_page 404 /custom_404.html;
+        location /404 {
+            root /var/www/html;
+            internal;
+        }
+    }\" > /etc/nginx/sites-available/default",
+    path    => ['/bin', '/usr/bin'],
+    require => File['/var/www/html/index.html', '/var/www/html/custom_404.html'],
 }
+
+# Ensure the service 'nginx' is running and enabled at boot
+service { 'nginx':
+    ensure     => running,
+    enable     => true,
+    hasrestart => true,
+    require    => Exec['nginx_config'],
+}
+
