@@ -1,0 +1,37 @@
+05:22:48.757782 IP 192.168.17.190.59463 > 192.168.17.51.domain: 32598+ A? smtp.sendgrid.net. (35)
+05:22:48.757810 IP 192.168.17.190.59463 > 192.168.17.51.domain: 57179+ AAAA? smtp.sendgrid.net. (35)
+05:22:48.762366 IP 192.168.17.51.domain > 192.168.17.190.59463: 32598 4/0/0 A 52.57.139.126, A 54.228.39.88, A 108.128.229.184, A 18.197.194.208 (99)
+05:22:48.762431 IP 192.168.17.51.domain > 192.168.17.190.59463: 57179 0/0/0 (35)
+05:22:48.762840 IP 192.168.17.190.58678 > ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission: Flags [S], seq 128519224, win 64240, options [mss 1460,sackOK,TS val 2209727456 ecr 0,nop,wscale 7], length 0
+05:22:48.906145 IP ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission > 192.168.17.190.58678: Flags [S.], seq 4216370609, ack 128519225, win 31856, options [mss 1400,sackOK,TS val 294248085 ecr 2209727456,nop,wscale 9], length 0
+05:22:48.906230 IP 192.168.17.190.58678 > ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission: Flags [.], ack 1, win 502, options [nop,nop,TS val 2209727599 ecr 294248085], length 0
+05:22:48.906632 IP 192.168.17.190.58678 > ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission: Flags [P.], seq 1:37, ack 1, win 502, options [nop,nop,TS val 2209727600 ecr 294248085], length 36
+05:22:48.976024 IP 192.168.17.190.45238 > 192.168.17.51.domain: 43216+ PTR? 51.17.168.192.in-addr.arpa. (44)
+05:22:48.980261 IP 192.168.17.51.domain > 192.168.17.190.45238: 43216 NXDomain 0/0/0 (44)
+05:22:48.980557 IP 192.168.17.190.47631 > 192.168.17.51.domain: 28143+ PTR? 190.17.168.192.in-addr.arpa. (45)
+05:22:48.983649 IP 192.168.17.51.domain > 192.168.17.190.47631: 28143 NXDomain 0/0/0 (45)
+05:22:48.983979 IP 192.168.17.190.40891 > 192.168.17.51.domain: 29582+ PTR? 126.139.57.52.in-addr.arpa. (44)
+05:22:48.987344 IP 192.168.17.51.domain > 192.168.17.190.40891: 29582 1/0/0 PTR ec2-52-57-139-126.eu-central-1.compute.amazonaws.com. (110)
+05:22:49.051717 IP ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission > 192.168.17.190.58678: Flags [.], ack 1, win 63, options [nop,nop,TS val 294248216 ecr 2209727599], length 0
+05:22:49.058282 IP ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission > 192.168.17.190.58678: Flags [P.], seq 1:48, ack 1, win 63, options [nop,nop,TS val 294248217 ecr 2209727599], length 47
+05:22:49.058332 IP 192.168.17.190.58678 > ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission: Flags [.], ack 48, win 502, options [nop,nop,TS val 2209727752 ecr 294248217], length 0
+05:22:49.059749 IP ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission > 192.168.17.190.58678: Flags [.], ack 37, win 63, options [nop,nop,TS val 294248222 ecr 2209727600], length 0
+05:22:49.059833 IP ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission > 192.168.17.190.58678: Flags [P.], seq 48:178, ack 37, win 63, options [nop,nop,TS val 294248222 ecr 2209727600], length 130
+05:22:49.059861 IP 192.168.17.190.58678 > ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission: Flags [.], ack 178, win 501, options [nop,nop,TS val 2209727753 ecr 294248222], length 0
+05:22:50.756879 IP 192.168.17.190.58678 > ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission: Flags [P.], seq 37:49, ack 178, win 501, options [nop,nop,TS val 2209729450 ecr 294248222], length 12
+05:22:50.895706 IP ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission > 192.168.17.190.58678: Flags [.], ack 49, win 63, options [nop,nop,TS val 294250074 ecr 2209729450], length 0
+05:22:50.904788 IP ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission > 192.168.17.190.58678: Flags [P.], seq 178:196, ack 49, win 63, options [nop,nop,TS val 294250074 ecr 2209729450], length 18
+05:22:50.904852 IP 192.168.17.190.58678 > ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission: Flags [.], ack 196, win 501, options [nop,nop,TS val 2209729598 ecr 294250074], length 0
+05:22:52.758685 IP 192.168.17.190.58678 > ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission: Flags [P.], seq 49:63, ack 196, win 501, options [nop,nop,TS val 2209731452 ecr 294250074], length 14
+05:22:52.892885 IP ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission > 192.168.17.190.58678: Flags [.], ack 63, win 63, options [nop,nop,TS val 294252073 ecr 2209731452], length 0
+05:22:52.894118 IP ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission > 192.168.17.190.58678: Flags [P.], seq 196:214, ack 63, win 63, options [nop,nop,TS val 294252073 ecr 2209731452], length 18
+05:22:52.894178 IP 192.168.17.190.58678 > ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission: Flags [.], ack 214, win 501, options [nop,nop,TS val 2209731587 ecr 294252073], length 0
+05:22:54.760206 IP 192.168.17.190.58678 > ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission: Flags [P.], seq 63:85, ack 214, win 501, options [nop,nop,TS val 2209733453 ecr 294252073], length 22
+05:22:54.933475 IP ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission > 192.168.17.190.58678: Flags [.], ack 85, win 63, options [nop,nop,TS val 294254114 ecr 2209733453], length 0
+05:22:55.096999 IP ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission > 192.168.17.190.58678: Flags [F.], seq 266, ack 85, win 63, options [nop,nop,TS val 294254277 ecr 2209733453], length 0
+05:22:55.097091 IP 192.168.17.190.58678 > ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission: Flags [.], ack 214, win 501, options [nop,nop,TS val 2209733790 ecr 294254114,nop,nop,sack 1 {266:267}], length 0
+05:22:55.102053 IP ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission > 192.168.17.190.58678: Flags [P.], seq 214:266, ack 85, win 63, options [nop,nop,TS val 294254276 ecr 2209733453], length 52
+05:22:55.102131 IP 192.168.17.190.58678 > ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission: Flags [.], ack 267, win 501, options [nop,nop,TS val 2209733795 ecr 294254276], length 0
+05:22:55.102236 IP 192.168.17.190.58678 > ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission: Flags [F.], seq 85, ack 267, win 501, options [nop,nop,TS val 2209733795 ecr 294254276], length 0
+05:22:55.255180 IP ec2-52-57-139-126.eu-central-1.compute.amazonaws.com.submission > 192.168.17.190.58678: Flags [.], ack 86, win 63, options [nop,nop,TS val 294254434 ecr 2209733795], length 0
+

@@ -7,10 +7,11 @@ sudo apt-get update -y
 sudo apt-get install -y haproxy=2.8.\*
 
 sudo service haproxy start
-echo "ENABLED=1
-CONFIG='/etc/haproxy/haproxy.cfg'" | sudo tee /etc/default/haproxy
-sudo mv /etc/haproxy/haproxy.cfg{,.original}
-sudo touch /etc/haproxy/haproxy.cfg
+
+#shellcheck disable=SC2154
+echo "ENABLED=1" | sudo tee /etc/default/haproxy
+
+sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.backup
 
 echo "global
     log /dev/log local0
@@ -25,13 +26,14 @@ defaults
     mode http
     option httplog
     option dontlognull
+    option http-server-close
+    option http-pretend-keepalive
     timeout connect 5s
     timeout client 10s
     timeout server 10s
 
 frontend myfrontend
     bind *:80
-    stats uri /haproxy?stats
     default_backend mybackend
 
 backend mybackend
