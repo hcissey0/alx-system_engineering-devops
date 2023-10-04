@@ -1,52 +1,51 @@
-# Configure a custom 404 page
-class custom_404 {
+# this manifest install and configures a new server
 
-  exec { 'update':
-    command => 'sudo apt-get update -y',
-    before  => Package['nginx'],
-  }
+exec { 'nginx-update':
+  command => 'apt-get update -y',
+  path    => '/usr/bin',
+}
 
-  # Install the Nginx web server
-  package { 'nginx':
-    ensure => present,
-  }
+package { 'nginx':
+  ensure => installed,
+}
 
-  # Create the custom 404 page
-  file { '/var/www/html/custom_404.html':
-    ensure => present,
-    content => 'Ceci n\'est pas une page',
-  }
+service { 'nginx':
+  ensure  => running,
+  enable  => true,
+  require => Package['nginx'],
+}
 
-  # Update the Nginx configuration
-  file { '/etc/nginx/sites-available/default':
-    ensure => present,
-    content => "
-server {
-  listen 80;
-  listen [::]:80 default_server;
-  root /var/www/html;
-  index index.html index.htm;
-  add_header X-Served-By $(hostname);
+file { '/var/www/html/index.html':
+  content => 'Hello World!',
+  require => Package['nginx'],
+}
 
-  location /redirect_me {
-    return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-  }
+file { '/var/www/html/custom_404.html':
+  content => 'Ceci n\'est pas une page',
+  require => Package['nginx'],
+}
 
-  error_page 404 /custom_404.html;
-
-  location /404 {
+file { '/etc/nginx/sites-available/default':
+  content => "server {
+    listen 80;
+    listen [::]:80 default_server;
     root /var/www/html;
-    internal;
-  }
+    index index.html index.htm;
+    add_header X-Served-By ${::hostname};
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+    error_page 404 /custom_404.html;
+    location /404 {
+        root /var/www/html;
+        internal;
+    }
+  }",
+  require => Package['nginx'],
+  notify  => Service['nginx'],
 }
-"
-  }
 
-  # Restart the Nginx web server
-  service { 'nginx':
-    ensure => running,
-    enabled => true,
-  }
-
+service { 'nginx-restart':
+  ensure    => restarted,
+  subscribe => File['/etc/nginx/sites-available/default'],
 }
-
