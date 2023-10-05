@@ -25,34 +25,38 @@
 # 	sudo service nginx restart
 # fi
 
-# update packages and install nginx
-sudo apt-get update -y && sudo apt-get install -y nginx
+# # update packages and install nginx
+# sudo apt-get update -y && sudo apt-get install -y nginx
 
-# start nginx
-sudo service nginx start
+# # start nginx
+# sudo service nginx start
 
-# check if nginx is running
-if systemctl is-active --quiet nginx;
-then
-	echo "nginx is running"
-else
-	echo "nginx is not running. Starting it now"
-	sudo systemctl start nginx
-fi
+# # check if nginx is running
+# if systemctl is-active --quiet nginx;
+# then
+# 	echo "nginx is running"
+# else
+# 	echo "nginx is not running. Starting it now"
+# 	sudo systemctl start nginx
+# fi
 
-# ensure nginx starts at boot
-sudo systemctl enable nginx
+# # ensure nginx starts at boot
+# sudo systemctl enable nginx
 
-# configure nginx to listen to port 80
-sudo sed -i 's/listen \[::\]:80/listen 0.0.0.0:80/g' /etc/ginx/sites-available/default
+# # configure nginx to listen to port 80
+# sudo sed -i 's/listen \[::\]:80/listen 0.0.0.0:80/g' /etc/ginx/sites-available/default
 
-# reload nginx
+# # reload nginx
+# sudo service nginx restart
+
+# # check if nginx is listening on port 80
+# if netstat -plntu | grep ":80" | grep nginx > /dev/null;
+# then
+# 	echo "nginx is listening on port 80"
+# else
+# 	echo "nginx is not listening on port 80"
+# fi
+
+sudo rm /etc/nginx/sites-enabled/default
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 sudo service nginx restart
-
-# check if nginx is listening on port 80
-if netstat -plntu | grep ":80" | grep nginx > /dev/null;
-then
-	echo "nginx is listening on port 80"
-else
-	echo "nginx is not listening on port 80"
-fi
