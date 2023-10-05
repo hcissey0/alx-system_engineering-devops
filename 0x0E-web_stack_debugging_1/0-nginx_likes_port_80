@@ -1,26 +1,58 @@
 #!/usr/bin/env bash
 # this script is used to correct an nginx server to listen on port 80
 
-if ! command -v nginx &> /dev/null
-then
-	echo "Nginx not installed"
-	sudo apt-get update -y
-	sudo apt-get install -y nginx
-fi
+# if ! command -v nginx &> /dev/null
+# then
+# 	echo "Nginx not installed"
+# 	sudo apt-get update -y
+# 	sudo apt-get install -y nginx
+# fi
 
-if sudo systemctl is-active --quiet nginx
+# if sudo systemctl is-active --quiet nginx
+# then
+# 	echo "nginx is running"
+# else
+# 	echo "nginx is not running"
+# 	sudo service nginx start
+# fi
+
+# if sudo netstat -tuln | grep ":80" &> /dev/null
+# then
+# 	echo "nginx is on port 80"
+# else
+# 	echo "nginx is not on port 80, fixing it ..."
+# 	sudo sed -i 's/listen .*/listen 80;/g' /etc/nginx/sites-available/default
+# 	sudo service nginx restart
+# fi
+
+# update packages and install nginx
+sudo apt-get update -y && sudo apt-get install -y nginx
+
+# start nginx
+sudo service nginx start
+
+# check if nginx is running
+if systemctl is-active --quiet nginx;
 then
 	echo "nginx is running"
 else
-	echo "nginx is not running"
-	sudo service nginx start
+	echo "nginx is not running. Starting it now"
+	sudo systemctl start nginx
 fi
 
-if sudo netstat -tuln | grep ":80" &> /dev/null
+# ensure nginx starts at boot
+sudo systemctl enable nginx
+
+# configure nginx to listen to port 80
+sudo sed -i 's/listen \[::\]:80/listen 0.0.0.0:80/g' /etc/ginx/sites-available/default
+
+# reload nginx
+sudo service nginx restart
+
+# check if nginx is listening on port 80
+if netstat -plntu | grep ":80" | grep nginx > /dev/null;
 then
-	echo "nginx is on port 80"
+	echo "nginx is listening on port 80"
 else
-	echo "nginx is not on port 80, fixing it ..."
-	sudo sed -i 's/listen .*/listen 80;/g' /etc/nginx/sites-available/default
-	sudo service nginx restart
+	echo "nginx is not listening on port 80"
 fi
