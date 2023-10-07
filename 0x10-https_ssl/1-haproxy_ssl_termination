@@ -36,7 +36,7 @@ defaults
 frontend  hassan-frontend
         bind *:80
         mode http
-        bind *:443 ssl crt /etc/haproxy/certs/www.hassancissey.pem
+        bind *:443 ssl crt /etc/haproxy/certs/www.hassancissey.tech.pem
         redirect scheme https if !{ ssl_fc }
         default_backend hassan-backend
 backend hassan-backend
