@@ -1,52 +1,16 @@
-# this manifest install and configures a new server
+# This puppet manifest is used to configure a new load balancer
 
-exec { 'nginx-update':
-  command => 'apt-get update -y',
-  path    => '/usr/bin',
+exec { 'update':
+  command => '/usr/bin/apt-get update -y',
 }
-
-package { 'nginx':
-  ensure => installed,
+-> package { 'nginx':
+  ensure => 'present',
 }
-
-service { 'nginx':
-  ensure  => running,
-  enable  => true,
-  require => Package['nginx'],
+-> file_line { 'add_header':
+  path  => '/etc/nginx/nginx.conf',
+  match => 'http {',
+  line  => "http {\n\tadd_header X-Served-By \"${hostname}\";",
 }
-
-file { '/var/www/html/index.html':
-  content => 'Hello World!',
-  require => Package['nginx'],
-}
-
-file { '/var/www/html/custom_404.html':
-  content => 'Ceci n\'est pas une page',
-  require => Package['nginx'],
-}
-
-file { '/etc/nginx/sites-available/default':
-  content => "server {
-    listen 80;
-    listen [::]:80 default_server;
-    root /var/www/html;
-    index index.html index.htm;
-    add_header X-Served-By ${::hostname};
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
-    error_page 404 /custom_404.html;
-    location /404 {
-        root /var/www/html;
-        internal;
-    }
-  }",
-  require => Package['nginx'],
-  notify  => Service['nginx'],
-}
-
-service { 'nginx-restart':
-  ensure    => running,
-  restart   => true,
-  subscribe => File['/etc/nginx/sites-available/default'],
+-> exec { 'run':
+  command => '/usr/sbin/service nginx restart',
 }
