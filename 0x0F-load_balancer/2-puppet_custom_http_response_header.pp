@@ -46,6 +46,7 @@ file { '/etc/nginx/sites-available/default':
 }
 
 service { 'nginx-restart':
-  ensure    => restarted,
+  ensure    => running,
+  restart   => true,
   subscribe => File['/etc/nginx/sites-available/default'],
 }
