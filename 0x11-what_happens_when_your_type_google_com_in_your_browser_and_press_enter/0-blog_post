@@ -1,0 +1,79 @@
+# What happens when you type `https://www.google.com` in your browser and press `Enter`
+
+Ever wondered what happened when you type in a url in the url box an hit Enter?
+Well, wonder no more, because this writing is here to guide you through what ever happens. Some of the terms might feel a bit technical but have patience and just keep on reading, as you go further, things will start to make more sense.
+
+But before we get started, let's get some things out of the way. We need to understand how a url is structured. Let's take a look at `https://www.google.com` .
+- The `https` is the protocol.
+- The `www` is the subdomain.
+- The `google` is the domain name.
+- The `com` is the top level domain.
+
+---
+
+## DNS request
+
+Let's start with DNS Request. DNS stands for `Domain Name System`. Immediately when you type in `www.google.com` and hit Enter, the browser sends a DNS query of `www.google.com` to a DNS resolver asking for the IP address. You know computers on a network or internet, identifies themselves by IP addresses which are numbers (e.g. `142.250.201.68` in the case of `www.google.com`). We humans do well at remembering and keeping track of names (like `www.google.com`) unlike computers who can remember and keep track of everything given to them, provided it's not deleted. This resolver then returns the IP address of `www.google.com` to the browser.
+
+But wait a minute, how does the resolver do that? Let's take a brief look at that.
+
+* The resolver starts by searching through it's local cache, to see if it has visited `www.google.com` before. If yes, it returns the IP for `www.google.com` else it contacts a DNS Root Name Server.
+
+* Root Name Servers, 13 of them in the world (but hundreds of physical servers actually, spread across the world), are the back bone of the internet. They contain the names and addresses of all the Top Level Domain (TLD) Name Servers. The Root Server checks the details of the url (`www.google.com`) and direct the query to an appropriate TLD Name Server.
+
+* There is a Name Server for each top level domain (TLD). There are currently  over 1500 valid top level domains such as `.com`, `.org` and `.gov`. In this case, our query goes to the `.com` TLD Name Server, this server then directs our query to an Authoritative Name Server for `google.com` where the IP address of `www.google.com` will be found.
+
+The found IP address for `www.google.com` is then returned to the resolver, which returns it to our browser.
+
+---
+
+## TCP/IP
+
+Now that we have the IP address of `www.google.com`, it's like we have the home address of the Google server for `www.google.com` but in this case on the internet. Now we need to say 'Hi' to it and establish a connection.
+
+This is what happens:
+
+* The browser sends a `TCP SYN` packet to the IP address of `www.google.com`. This packed contains information such as:
+
+    - The source port number: The port number the browser will use to send and receive data. Could by any (e.g. `3434`).
+    - The destination port number: The port number that the web server is listening on. Since our protocol is `https` the port number will be `443`.
+    - The sequence number: This number is a unique number that is used to identify the first packet in a TCP connection.
+    -
+
+        Browser:
+        Sends TCP SYN packet to 142.250.201.68 on port 443
+
+* The server receives the `TCP SYN` packet and sends a `TCP SYN-ACK` packet back to the browser. This `TCP SYN-ACK` contains the same contents as the `TCP SYN` packet but with a sequence number and an acknowledgement number. The acknowledgement number is used to acknowledge the `TCP SYN` packet.
+
+        Google Server:
+        Sends TCP SYN-ACK packet to browser on port 3434
+
+* The browser then receives the `TCP SYN-ACK` packet and sends a `TCP ACK` packet to the server. The `TCP ACK` packet contains the `TCP SYN-ACK` packet's acknowledgement number.
+
+        Browser:
+        Sends TCP ACK packet to 142.250.201.68 on port 443
+
+* Now that the Google server has acknowledged us and set up a connection, we can send a request to the server, say `HTTP GET` request.
+
+        Browser:
+        Sends HTTP GET request to 142.250.201.68 on port 443
+
+* The server then receives the `HTTP GET` request and sends an `HTTP` response back to the browser.
+
+        Google server:
+        Sends HTTP response to browser on port 3434
+
+* The browser after loading and rendering the response in a human readable format, it closes the connection by sending a `TCP FIN` packet to the Google server.
+
+        Browser:
+        Sends TCP FIN packet to 142.250.201.68
+
+* The Google server sends `TCP FIN-ACK`, an acknowledgement packet to acknowledge the connection closure.
+
+        Google server:
+        Sends TCP FIN-ACK packet to browser
+
+* The the browser then send a `TCP ACK` packet to close the connection.
+
+        Browser:
+        Sends TCP ACK packet to Google server
