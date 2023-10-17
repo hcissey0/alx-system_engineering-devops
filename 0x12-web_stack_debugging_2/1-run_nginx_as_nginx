@@ -21,6 +21,7 @@ check_nginx_as_nginx() {
 	else
 		echo "nginx is already running as nginx user"
 	fi
+	sudo sed -i 's/user .*/user nginx;/g' /etc/nginx/nginx.conf
 }
 
 check_nginx_port() {
@@ -39,4 +40,5 @@ check_nginx_user
 check_nginx_as_nginx
 check_nginx_port
 
+sudo service nginx restart
 echo "Config done!"
