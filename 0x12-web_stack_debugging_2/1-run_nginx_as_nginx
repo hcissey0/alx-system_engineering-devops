@@ -29,9 +29,9 @@ check_nginx_port() {
 		echo "nginx is not listening on port 8080. Fixing..."
 		sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 		sudo sed -i 's/listen 80 default_server;/listen 8080 default_server;/g' /etc/nginx/sites-available/default
-		sudo service nginx reload
+		sudo service nginx restart
 	else
-		echo "nginx is listing on port8080"
+		echo "nginx is listing on port 8080"
 	fi
 }
 
