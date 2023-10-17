@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# This script is used to make nginx run as nginx user
+
+check_nginx_user() {
+	if ! id -u nginx > /dev/null 2>&1;
+	then
+		echo "'nginx' is not a user. Creating..."
+		sudo useradd -r -s /sbin/nologin nginx
+	else
+		echo "'nginx' user exists"
+	fi
+}
+
+check_nginx_as_nginx() {
+	if ! ps aux | grep nginx | grep -v root > /dev/null;
+	then
+		echo "nginx is not running as nginx user. Fixing..."
+		sudo service nginx stop
+		sudo -u nginx /usr/sbin/nginx
+	else
+		echo "nginx is already running as nginx user"
+	fi
+}
+
+check_nginx_port() {
+	if ! nc -z 0 8080 > /dev/null;
+	then
+		echo "nginx is not listening on port 8080. Fixing..."
+		sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
+		sudo sed -i 's/listen 80 default_server;/listen 8080 default_server;/g' /etc/nginx/sites-available/default
+		sudo service nginx reload
+	else
+		echo "nginx is listing on port8080"
+	fi
+}
+
+check_nginx_user
+check_nginx_as_nginx
+check_nginx_port
+
+echo "Config done!"
