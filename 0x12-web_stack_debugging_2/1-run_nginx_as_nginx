@@ -11,6 +11,7 @@ check_nginx_user() {
 	fi
 }
 
+# shellcheck disable=SC2009
 check_nginx_as_nginx() {
 	if ! ps aux | grep nginx | grep -v root > /dev/null;
 	then
