@@ -14,5 +14,3 @@ DATE="$(date +%d-%m-%Y)"
 sudo mysqldump -u root -p"$PASSWORD" --all-databases | sudo tee backup.sql
 
 tar -cvzf "$DATE.tar.gz" backup.sql
-
-sudo rm backup.sql
