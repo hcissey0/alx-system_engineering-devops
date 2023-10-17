@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# This script configures nginx to be run by nginx user
+sudo id nginx &>/dev/null || sudo useradd -r -s /sbin/nologin nginx
+sudo -u nginx /usr/sbin/nginx
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
+sudo sed -i 's/listen 80.*/listen 8080 default_server;/g' /etc/nginx/sites-available/default
+sudo service nginx restart
