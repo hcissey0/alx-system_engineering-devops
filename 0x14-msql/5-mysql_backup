@@ -15,4 +15,4 @@ sudo mysqldump -u root -p"$PASSWORD" --all-databases | sudo tee backup.sql
 
 tar -cvzf "$DATE.tar.gz" backup.sql
 
-rm backup.sql
+sudo rm backup.sql
