@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """This script is used to gather info from an API"""
 
+import json
 import requests
 import sys
-import json
 
 
 def get_employee_details():
