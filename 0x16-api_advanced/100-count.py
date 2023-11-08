@@ -15,7 +15,6 @@ def count_words(subreddit, word_list, count=None, after=None):
     if count is None:
         count = {word.lower(): 0 for word in word_list}
 
-
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
     headers = {"User-Agent": "My-Reddit-Script"}
     params = {"limit": 100, 'after': after}
@@ -33,7 +32,8 @@ def count_words(subreddit, word_list, count=None, after=None):
                 count[word] += 1
 
     if data.get('after') is not None:
-        count_words(subreddit, word_list, count, data.get('after'))
+        count_words(subreddit, word_list,
+                    count, data.get('after'))
     else:
         sorted_count = sorted([(k, v)
                                for k, v in count.items()
