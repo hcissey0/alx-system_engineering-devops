@@ -25,11 +25,12 @@ def count_words(subreddit, word_list, count=None, after=None):
         return None
     data = response.json().get('data')
     for post in data.get('children'):
-        title = post.get('data').get('title').lower()
-        words = re.findall(r'\b\w+\b', title)
-        for word in words:
-            if word in [w.lower() for w in word_list]:
-                count[word] += 1
+        title = post.get('data').get('title').lower().split()
+        for word in [w.lower() for w in word_list]:
+            count[word] += len([i for i in title if i == word])
+#        for word in title:
+#            if word in [w.lower() for w in word_list]:
+#                count[word] += 1
 
     if data.get('after') is not None:
         count_words(subreddit, word_list,
