@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 # This script is used to reload guincorn in graceful way
 PID=$(pgrep -f "gunicorn.*master")
-kill -HUP "$PID"
+sudo kill -HUP "$PID"
+sudo service start gunicorn
