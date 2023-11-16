@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
-# This script is used to reload guincorn in graceful way
-PID=$(pgrep -f "gunicorn.*master")
-sudo kill -HUP "$PID"
-sudo service start gunicorn
+
+# Find the process IDs of the Gunicorn workers
+worker_pids=$(pgrep -f "gunicorn")
+
+# Send a graceful reload signal to each worker
+for pid in $worker_pids
+do
+    echo "Reloading Gunicorn worker: $pid"
+    kill -HUP "$pid"
+done
+
+echo "Gunicorn reload complete"# This script is used to reload guincorn in graceful way
