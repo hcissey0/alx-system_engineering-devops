@@ -1,6 +1,13 @@
 # This is a puppet manifest to grant ability to open as much files as possible
 
-exec {'change-os-configuration-for-holberton-user':
-  command => "echo 'holberton soft nofile 4096' >> /etc/security/limits.conf",
-  path    => ['/bin', '/usr/bin', '/sbin', '/usr/sbin']
+exec { 'sed -i "s/holberton hard nofile 15/holberton hard nofile 5000/" /etc/security/limits.conf':
+  path => '/usr/bin:/usr/sbin:/bin',
+}
+
+exec { 'sed -i "s/holberton soft nofile 14/holberton soft nofile 4000/" /etc/security/limits.conf':
+  path => '/usr/bin:/usr/sbin:/bin',
+}
+
+-> exec {'change-os-configuration-for-holberton-user':
+  command => '/sbin/sysctl -p',
 }
