@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# This script is used to reload guincorn in graceful way
+
+PID=`ps aux | grep gunicorn | grep master | awk '{ print $2 }'`
+
+kill -HUP $PID
